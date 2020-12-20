@@ -1,6 +1,7 @@
 package steps;
 
 import cucumber.api.java.en.Then;
+import cucumber.api.java.pt.Entao;
 import cucumber.api.java.pt.Então;
 import groovy.json.internal.LazyMap;
 import org.junit.Assert;
@@ -15,14 +16,20 @@ public class GeneralSteps {
         Assert.assertEquals(value, RESTSupport.key(field));
     }
 
+    @Entao("^O sistema deve apresentar a mensagem: \"([^\"]*)\"$")
     @Then("^user should see \"([^\"]*)\" message$")
     public void userShouldSeeMessage(String type) throws Throwable {
         LazyMap messageJson = new LazyMap();
+        messageJson.put("salvo com sucesso", 201);
         messageJson.put("save with success", 201);
+        messageJson.put("sucesso", 200);
         messageJson.put("success", 200);
         messageJson.put("no content", 204);
+        messageJson.put("sem conteúdo", 204);
         messageJson.put("not found", 404);
+        messageJson.put("não encontrado", 404);
         messageJson.put("unauthorized", 401);
+        messageJson.put("entidade não processada", 422);
 
         Assert.assertEquals(messageJson.get(type),RESTSupport.getResponseCode());
     }
